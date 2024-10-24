@@ -1,14 +1,12 @@
 from aiogram import Router
-from aiogram import Bot
 from aiogram import F
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-from Parser.parser import RssParser
-from Config.json import actionsub
+from Config.json import actionsub, writeIdUser
 
 
 baseRouter: Router = Router()
-bot: Bot = None
+
 
 def keyboard() -> ReplyKeyboardMarkup:
     addSub: KeyboardButton = KeyboardButton(text="Подписаться 👍🏻")
@@ -18,8 +16,8 @@ def keyboard() -> ReplyKeyboardMarkup:
 
 @baseRouter.message(Command("start"))
 async def cmd_start(message: Message):
-    parser: RssParser = RssParser(bot=bot)
     actionsub(idUser=message.chat.id, action="add")
+    writeIdUser(idUser=message.chat.id, fullName=message.chat.full_name)
     await message.answer(text="Привет вы подписались на новости от Медузы.")
 
 
@@ -29,10 +27,8 @@ async def cmd_start(message: Message):
 
 @baseRouter.message(F.text == "Подписаться 👍🏻")
 async def cmd_start(message: Message):
-    print("1")
     await message.answer(text=actionsub(idUser=message.chat.id, action="add"), reply_markup=ReplyKeyboardRemove())
 
 @baseRouter.message(F.text == "Отписаться 👎🏻")
 async def cmd_start(message: Message):
-    print("0")
     await message.answer(text=actionsub(idUser=message.chat.id, action="del"), reply_markup=ReplyKeyboardRemove())

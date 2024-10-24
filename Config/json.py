@@ -35,3 +35,12 @@ def readJson() -> dict:
 def writeJson(data: dict) -> None:
     with open(file=currentPath, mode="w", encoding="utf-8") as file:
         dump(obj=data, fp=file, ensure_ascii=False, indent=4)
+
+def writeIdUser(idUser: int, fullName: str) -> None:
+    with open(file=f"{str(Path.cwd())}/Config/users.json", mode="r", encoding="utf-8") as file:
+        users: dict = load(fp=file)
+
+    users.update({str(idUser) : fullName})
+
+    with open(file=f"{str(Path.cwd())}/Config/users.json", mode="w", encoding="utf-8") as file:
+        dump(obj=users, fp=file, ensure_ascii=False, indent=4)
