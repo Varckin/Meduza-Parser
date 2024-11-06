@@ -20,7 +20,6 @@ async def cmd_start(message: Message):
     writeIdUser(idUser=message.chat.id, fullName=message.chat.full_name)
     await message.answer(text="Привет вы подписались на новости от Медузы.")
 
-
 @baseRouter.message(Command("subscription"))
 async def cmd_start(message: Message):
     await message.answer(text="Выберите что сделать с подписотой.", reply_markup=keyboard())

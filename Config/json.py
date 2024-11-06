@@ -10,7 +10,7 @@ def actionsub(idUser: int, action: str) -> str:
             if idUser not in listSub:
                 listSub.append(idUser)
                 writeJson(data=data)
-                return "Подписка активирована! Ое :)"
+                return "Подписка активирована! :)"
             else:
                 return "Вы уже и так подписаны!"
         
